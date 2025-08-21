@@ -1,0 +1,9 @@
+.DS_Store
+.git
+.gitignore
+.pre-commit-config.yaml
+
+Brewfile
+LICENSE
+Makefile
+README.md
