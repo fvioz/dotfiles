@@ -21,6 +21,7 @@ export GPG_TTY=$(tty)
 alias ccat="$(which cat)"
 alias cat="$(which bat)"
 alias gst="$(which git) status"
+alias ga="$(which git) add"
 alias gc="$(which git) commit --verbose"
 alias gl="$(which git) pull"
 alias ls="$(which eza) --icons=always"
