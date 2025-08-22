@@ -1,50 +1,13 @@
-# History setup
-HISTFILE=$HOME/.zhistory
-HISTSIZE=1000
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-
-setopt append_history
-setopt share_history
-setopt hist_expire_dups_first
-setopt hist_find_no_dups
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_save_no_dups
-setopt hist_verify
-
-# Alias
-alias ccat="$(which cat)"
-alias cat="$(which bat)"
-alias gst="$(which git) status"
-alias ga="$(which git) add"
-alias gc="$(which git) commit --verbose"
-alias gl="$(which git) pull"
-alias ls="$(which eza) --icons=always"
-
-update_tools(){
-    brew update && brew upgrade && brew cleanup
-    echo "\n"$fg[blue]'==>'$reset_color $fg_bold[white]Updating Zinit...
-    zinit self-update
-    echo "\n"$fg[blue]'==>'$reset_color $fg_bold[white]Updating macOS software...
-    sudo softwareupdate -i -a
+echo_header() {
+    echo "\n"$fg[blue]'==>'$reset_color $fg_bold[white]$1$reset_color
 }
-
-# Man
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export MANROFFOPT="-c"
-
-# Keybindings
-bindkey -e
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
 
 # Brew
 if [[ -f "/opt/homebrew/bin/brew" ]] then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    echo "Installing Homebrew..."
+    # Install Homebrew if not already installed
+    echo_header "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
@@ -53,7 +16,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Install Zinit if not already installed
 if [ ! -d "$ZINIT_HOME" ]; then
-    echo "Installing Zinit..."
+    echo_header "Installing Zinit..."
     mkdir -p "$(dirname $ZINIT_HOME)"
     git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
@@ -93,3 +56,45 @@ eval "$(zoxide init zsh --cmd cd)"
 
 # Mise (Tool version manager)
 eval "$(mise activate zsh --shims)"
+
+# History setup
+HISTFILE=$HOME/.zhistory
+HISTSIZE=1000
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+
+setopt append_history
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_find_no_dups
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt hist_verify
+
+# Man
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+
+# Keybindings
+bindkey -e
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
+
+# Alias
+alias ccat="$(which cat)"
+alias cat="$(which bat)"
+alias gst="$(which git) status"
+alias ga="$(which git) add"
+alias gc="$(which git) commit --verbose"
+alias gl="$(which git) pull"
+alias ls="$(which eza) --icons=always"
+
+update_tools(){
+    brew update && brew upgrade && brew cleanup
+    echo_header "Updating Zinit..."
+    zinit self-update
+    echo_header "Updating macOS software..."
+    sudo softwareupdate -i -a
+}
