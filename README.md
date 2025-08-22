@@ -1,2 +1,3 @@
-# dotfiles
-Configuration files for my local development environment
+# Dotfiles
+
+Configuration files for my local development environment.

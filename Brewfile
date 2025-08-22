@@ -2,10 +2,6 @@
 cask "font-meslo-lg-nerd-font"
 cask "wezterm"
 brew "zsh"
-brew "zsh-autosuggestions"
-brew "zsh-completions"
-brew "zsh-history-substring-search"
-brew "zsh-syntax-highlighting"
 
 # Git & GPG
 brew "git"
