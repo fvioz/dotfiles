@@ -14,9 +14,6 @@ setopt hist_ignore_space
 setopt hist_save_no_dups
 setopt hist_verify
 
-# GPG
-export GPG_TTY=$(tty)
-
 # Alias
 alias ccat="$(which cat)"
 alias cat="$(which bat)"
@@ -25,6 +22,14 @@ alias ga="$(which git) add"
 alias gc="$(which git) commit --verbose"
 alias gl="$(which git) pull"
 alias ls="$(which eza) --icons=always"
+
+update_tools(){
+    brew update && brew upgrade && brew cleanup
+    echo "\n"$fg[blue]'==>'$reset_color $fg_bold[white]Updating Zinit...
+    zinit self-update
+    echo "\n"$fg[blue]'==>'$reset_color $fg_bold[white]Updating macOS software...
+    sudo softwareupdate -i -a
+}
 
 # Man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -35,13 +40,22 @@ bindkey -e
 bindkey "^[[A" history-substring-search-up
 bindkey "^[[B" history-substring-search-down
 
+# Brew
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
 # Zinit (Plugin manager)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Install Zinit if not already installed
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+    echo "Installing Zinit..."
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # Load Zinit
