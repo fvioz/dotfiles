@@ -7,6 +7,7 @@ brew "zsh"
 brew "git"
 brew "pinentry-mac"
 brew "pre-commit"
+brew "typos-cli"
 
 # Utils
 brew "bat"
