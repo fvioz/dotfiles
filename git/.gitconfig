@@ -1,0 +1,40 @@
+[core]
+    hooksPath = ~/.config/git/hooks
+    excludesfile = ~/.config/git/.gitignore
+
+[user]
+	name = "Fabian Sabogal"
+	signingkey = BA8232059E6AD55A
+
+[init]
+    defaultBranch = main
+
+[status]
+    branch = true
+    showStash = true
+    showUntrackedFiles = all
+
+[push]
+    autoSetupRemote = true
+    default = current
+    followTags = true
+
+[tag]
+    gpgSign = true
+
+[commit]
+	gpgsign = true
+
+[fetch]
+	prune = true
+
+[pull]
+    default = current
+	rebase = true
+
+[rebase]
+    autoStash = true
+    missingCommitsCheck = warn
+
+[log]
+    abbrevCommit = true
