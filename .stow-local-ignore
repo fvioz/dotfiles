@@ -1,9 +1,9 @@
-.DS_Store
-.git
-.gitignore
-.pre-commit-config.yaml
+\.DS_Store
+\.git
+\.gitignore
+\.ruby-lsp
 
-Brewfile
-LICENSE
-Makefile
-README.md
+^/Brewfile
+^/LICENSE
+^/Makefile
+^/README.md
