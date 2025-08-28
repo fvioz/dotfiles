@@ -19,4 +19,8 @@ brew "mise"
 brew "ollama"
 brew "podman"
 cask "podman-desktop"
-brew "zed"
+cask "zed"
+
+# Apps
+cask "shortcat"
+cask "rectangle"
