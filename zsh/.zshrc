@@ -1,28 +1,10 @@
-echo_header() {
-    echo "\n"$fg[blue]'==>'$reset_color $fg_bold[white]$1$reset_color
-}
-
 # Brew
 if [[ -f "/opt/homebrew/bin/brew" ]] then
     eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    # Install Homebrew if not already installed
-    echo_header "Installing Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-# Zinit (Plugin manager)
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Install Zinit if not already installed
-if [ ! -d "$ZINIT_HOME" ]; then
-    echo_header "Installing Zinit..."
-    mkdir -p "$(dirname $ZINIT_HOME)"
-    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # Load Zinit
-source "${ZINIT_HOME}/zinit.zsh"
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz compinit && compinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 zinit cdreplay -q
@@ -55,7 +37,7 @@ source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
 
 # Mise (Tool version manager)
-eval "$(mise activate zsh --shims)"
+eval "$(mise activate zsh)"
 
 # History setup
 HISTFILE=$HOME/.zhistory
@@ -91,10 +73,6 @@ alias gc="$(which git) commit --verbose"
 alias gl="$(which git) pull"
 alias ls="$(which eza) --icons=always"
 
-update_tools(){
-    brew update && brew upgrade && brew cleanup
-    echo_header "Updating Zinit..."
-    zinit self-update
-    echo_header "Updating macOS software..."
-    sudo softwareupdate -i -a
-}
+# Custom scripts
+. $HOME/.scripts/utils/update_tools.sh
+. $HOME/.scripts/utils/check_for_updates.sh
