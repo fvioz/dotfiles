@@ -2,7 +2,7 @@
 \.git
 \.gitignore
 \.ruby-lsp
-
+\.install.sh
 ^/Brewfile
 ^/LICENSE
 ^/Makefile
